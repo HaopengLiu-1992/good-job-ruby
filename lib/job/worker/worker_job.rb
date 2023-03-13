@@ -1,0 +1,2 @@
+class WorkerJob
+end

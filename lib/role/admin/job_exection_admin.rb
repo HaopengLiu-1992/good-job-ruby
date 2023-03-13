@@ -1,0 +1,2 @@
+class JobExectionAdmin
+end
