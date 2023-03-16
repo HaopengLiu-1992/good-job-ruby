@@ -1,2 +1,0 @@
-class JobExectionAdmin
-end
