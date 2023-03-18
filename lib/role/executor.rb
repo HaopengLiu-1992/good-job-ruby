@@ -5,7 +5,6 @@ require_relative '../channel/channel'
 require_relative '../manual'
 class Executor
   include Logging
-  include Stats
   include Manual
 
   attr_reader :name
