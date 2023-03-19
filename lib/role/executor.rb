@@ -13,7 +13,7 @@ class Executor
     @cache = Support::Cache.instance
     @active_jobs = Concurrent::Hash.new
     @archived_jobs = Concurrent::Hash.new
-    @id = ENV['REINDEX_WORKER_ID'].to_i
+    @id = ENV['WORKER_ID'].to_i
     @name = ""
     @cancelled_jobs_poll = ""
   end
