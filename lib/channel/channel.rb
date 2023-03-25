@@ -1,13 +1,16 @@
-class Channel
-  include Logging
+module Channel
+  class BaseChannel
+    include Logging
 
-  attr_reader :name
+    attr_reader :name
 
-  def publish_job(_job)
-    raise NotImplementedError
-  end
+    def publish_job(_job)
+      raise NotImplementedError
+    end
 
-  def get_job
-    raise NotImplementedError
+    def get_job
+      raise NotImplementedError
+    end
   end
 end
+
