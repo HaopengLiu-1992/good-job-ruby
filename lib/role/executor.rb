@@ -1,7 +1,7 @@
 require 'concurrent'
 require 'time'
-require_relative '../store/store'
-require_relative '../channel/channel'
+require_relative '../store/base_store'
+require_relative '../channel/base_channel'
 require_relative '../manual'
 module Role
   class Executor

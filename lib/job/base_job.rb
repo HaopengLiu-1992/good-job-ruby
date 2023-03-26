@@ -1,7 +1,6 @@
 module Job
   class BaseJob
     include Logging
-    include Stats
     include Manual
 
     attr_reader :id, :complexity
