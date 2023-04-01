@@ -7,10 +7,6 @@ require 'rack-request-id'
 class API < Sinatra::Base
 
   register Sinatra::Namespace
-  set :show_exceptions, false
-  set :public_folder, File.dirname(__FILE__) + '/public'
-  set :server, 'puma'
-  set :protection, except: :path_traversal
 
   namespace '/api/v1' do
     before do
@@ -38,7 +34,7 @@ class API < Sinatra::Base
 
     end
   end
-  
+
   error do
     content_type :json
     status 500 # or whatever
