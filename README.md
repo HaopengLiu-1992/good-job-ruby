@@ -8,5 +8,3 @@ job auto republish
 Admin: Take Big Job and break down into sub jobs that worker could take
 
 Worker: Execute sub jobs
-
-
