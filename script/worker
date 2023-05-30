@@ -1,0 +1,9 @@
+environment = ENV['APP_ENV'] || 'development'
+
+if environment == 'development'
+  ENV['WORKER'] = 'true'
+end
+
+main_rb = 'lib/main.rb'
+
+exec 'ruby', main_rb, *ARGV
