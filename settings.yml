@@ -1,3 +1,6 @@
-#logger:
-#  logfile: good-job.log
-#  level: debug
+logger:
+  logfile: good-job.log
+  level: debug
+redis:
+  host: localhost
+  port: 6379
