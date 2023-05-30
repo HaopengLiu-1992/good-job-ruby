@@ -1,0 +1,3 @@
+#logger:
+#  logfile: good-job.log
+#  level: debug

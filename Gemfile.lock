@@ -2,18 +2,16 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
-    connection_pool (2.4.0)
+    concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     json (2.6.3)
     logger (1.5.3)
     multi_json (1.15.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    nio4r (2.5.9)
     parallel (1.23.0)
     parser (3.2.2.1)
       ast (~> 2.4.1)
-    puma (6.2.2)
-      nio4r (~> 2.0)
     rack (2.2.7)
     rack-protection (3.0.6)
       rack
@@ -55,11 +53,11 @@ GEM
     unicode-display_width (2.4.2)
 
 PLATFORMS
-  arm64-darwin-20
+  ruby
 
 DEPENDENCIES
+  concurrent-ruby
   logger
-  puma
   redis
   rubocop
   sinatra

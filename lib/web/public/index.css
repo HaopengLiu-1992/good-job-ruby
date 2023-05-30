@@ -1,0 +1,41 @@
+#main { 
+  padding: 10px;
+}
+
+.progress-cell {
+  width: 50%;
+}
+
+.progress-text  { 
+  position: absolute;
+  width: 90%;
+  color: black;
+}
+
+td.text-line-box {
+  max-width:450px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+td.text-line-box:hover {
+  overflow:visible;
+  white-space:pre-wrap;
+  word-wrap: break-word;
+}
+
+.reindex-host {
+  display: block;
+  margin-left: 20px;
+  margin-top: -10px;
+}
+
+h4.dropdownInactive:before {
+  content: "\25b6\00a0";
+}
+
+h4.dropdownActive:before {
+  content: "\25BC\00a0";
+}
+
+.collapse {  transition: height 0.01s; }

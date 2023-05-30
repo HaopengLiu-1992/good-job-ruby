@@ -1,58 +1,64 @@
-module Job
-  class BaseJob
-    include Logging
-    include Manual
+require_relative '../setup'
+require_relative '../manual'
+require_relative '../logging'
 
-    attr_reader :id, :complexity
+module GoodJob
+  module Job
+    class BaseJob
+      include Logging
+      include Manual
 
-    def initialize(id)
-      @id = id
-      @cache = Store.instance
-    end
+      attr_reader :id, :complexity
 
-    def execute(_job_handler = nil)
-      raise NotImplementedError
-    end
+      def initialize(id)
+        @id = id
+        @cache = Setup.settings['cache']
+      end
 
-    def archive
-      { done: true, message: "This job is done and archived at time: #{DateTime.now}" }
-    end
+      def execute(_job_handler = nil)
+        raise NotImplementedError
+      end
 
-    def clean
-      @cache.del(id)
-    end
+      def archive
+        { done: true, message: "This job is done and archived at time: #{DateTime.now}" }
+      end
 
-    def finalize
-      yield
-      mark_as_done
-    end
+      def clean
+        @cache.del(id)
+      end
 
-    def status_report
-      raise NotImplementedError
-    end
+      def finalize
+        yield
+        mark_as_done
+      end
 
-    def ready_to_mark_as_done?
-      raise NotImplementedError
-    end
+      def status_report
+        raise NotImplementedError
+      end
 
-    def done?
-      @cache.get(id).to_s.downcase == 'true'
-    end
+      def ready_to_mark_as_done?
+        raise NotImplementedError
+      end
 
-    def to_hash
-      raise NotImplementedError
-    end
+      def done?
+        @cache.get(id).to_s.downcase == 'true'
+      end
 
-    def self.from_hash(_job_hash)
-      raise NotImplementedError
-    end
+      def to_hash
+        raise NotImplementedError
+      end
 
-    def save_as_pending
-      @cache.set(id, false)
-    end
+      def self.from_hash(_job_hash)
+        raise NotImplementedError
+      end
 
-    def mark_as_done
-      @cache.set(id, true)
+      def save_as_pending
+        @cache.set(id, false)
+      end
+
+      def mark_as_done
+        @cache.set(id, true)
+      end
     end
   end
 end

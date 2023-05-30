@@ -1,41 +1,73 @@
-class Manager
-  def initialize
-    admin_enabled = ENV.fetch('ADMIN', false)
-    worker_enabled = ENV.fetch('WORKER', false)
-    @admin = start_admin if admin_enabled
-    @worker = start_worker if worker_enabled
-  end
+require_relative '../lib/role/worker/worker'
+require_relative '../lib/role/admin/admin'
+require_relative 'web/api'
+require_relative 'logging'
 
-  def start_worker
+require 'thread'
 
-  end
+module GoodJob
+  class Manager
+    include Logging
 
-  def start_admin
+    def initialize(_settings = {})
+      admin_enabled = ENV.fetch('ADMIN', '').upcase == 'TRUE'
+      worker_enabled = ENV.fetch('WORKER', '').upcase == 'TRUE'
+      if admin_enabled
+        @admin = Role::Admin.new
+        @admin.start
+      end
 
-  end
+      if worker_enabled
+        @worker = Role::Worker.new
+        @worker.start
+      end
 
-  def stop_all
-    @admin.stop if @admin
-    @worker.stop if @worker
-  end
+      @mutex = Mutex.new
+      @cond_var = ConditionVariable.new
+      @quit = false
+    end
 
-  def report_job_status(job_id)
+    at_exit do
+      logger.info "Force quit!"
+      @quit = true
+      @admin&.stop
+      @worker&.stop
+    end
 
-  end
+    def run
+      start_api if @admin
+      if @worker
+        loop do
+          sleep 1 until gets.chomp == "exit"
+        end
+      end
+    end
 
-  def get_all_jobs
+    def start_api
+      API.set :manager, self
+      API.set :bind, 'localhost'
+      API.set :port, 5000
+      API.run!
+    end
 
-  end
+    def get_job_status(job_id)
+      @admin.get_job_status(job_id)
+    end
 
-  def report_admin_status
+    def get_all_jobs
+      @admin.report_job_status
+    end
 
-  end
+    def get_worker_status
+      @admin.get_workers_status
+    end
 
-  def track_worker_status
+    def start_job(job)
+      @admin.execute(job)
+    end
 
-  end
-
-  def run_job
-
+    def cancel_job(job_id)
+      @admin.cancel_job(job_id)
+    end
   end
 end
